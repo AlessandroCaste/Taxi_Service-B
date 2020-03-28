@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$USER_HOME$/Desktop/Challenge/Taxi_Service_BackEnd/Taxi_Service_BackEnd.iml" filepath="$USER_HOME$/Desktop/Challenge/Taxi_Service_BackEnd/Taxi_Service_BackEnd.iml" />
+      <module fileurl="file://$USER_HOME$/Desktop/Challenge/Taxi_Service_FrontEnd/Taxi_Service_FrontEnd.iml" filepath="$USER_HOME$/Desktop/Challenge/Taxi_Service_FrontEnd/Taxi_Service_FrontEnd.iml" />
+    </modules>
+  </component>
+</project>
