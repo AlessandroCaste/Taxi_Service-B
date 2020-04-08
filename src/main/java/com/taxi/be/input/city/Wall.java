@@ -1,5 +1,7 @@
 package com.taxi.be.input.city;
 
+import com.taxi.be.graph.elements.CityVertex;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -49,6 +51,14 @@ public class Wall implements Serializable {
 
     public void setCityMap(CityMap cityMap) {
         this.cityMap = cityMap;
+    }
+
+    public CityVertex getSourceAsCityVertex() {
+        return new CityVertex(x1,y1);
+    }
+
+    public CityVertex getTargetAsCityVertex() {
+        return new CityVertex(x2,y2);
     }
 
     public String coordinatesToString() {

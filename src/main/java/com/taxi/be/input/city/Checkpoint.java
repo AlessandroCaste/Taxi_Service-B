@@ -1,5 +1,7 @@
 package com.taxi.be.input.city;
 
+import com.taxi.be.graph.elements.CityVertex;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -56,6 +58,14 @@ public class Checkpoint implements Serializable {
 
     public int getY2() {
         return y2;
+    }
+
+    public CityVertex getSourceAsCityVertex () {
+        return new CityVertex(x1,y1);
+    }
+
+    public CityVertex getTargetCityVertex() {
+        return new CityVertex(x2,y2);
     }
 
     public String coordinatesToString() {

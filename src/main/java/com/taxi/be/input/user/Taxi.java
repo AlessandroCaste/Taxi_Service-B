@@ -1,5 +1,6 @@
 package com.taxi.be.input.user;
 
+import com.taxi.be.graph.elements.CityVertex;
 import com.taxi.be.input.city.CityMap;
 import javax.persistence.*;
 
@@ -22,8 +23,8 @@ public class Taxi {
         this.y = y;
     }
 
-    public Coordinate getCoordinate() {
-        return new Coordinate(x,y);
+    public CityVertex getPositionAsCityVertex() {
+        return new CityVertex(x,y);
     }
 
     public String getTaxiId() {
