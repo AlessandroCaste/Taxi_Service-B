@@ -10,7 +10,6 @@ import com.taxi.be.input.city.Checkpoint;
 import com.taxi.be.input.city.CityMap;
 import com.taxi.be.input.city.Wall;
 import com.taxi.be.input.user.Taxi;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.generate.GridGraphGenerator;
 import org.jgrapht.graph.GraphWalk;
 import org.jgrapht.graph.SimpleWeightedGraph;
@@ -34,6 +33,8 @@ public class CityGraph {
     private ArrayList<Taxi> taxis;
     private SimpleWeightedGraph<CityVertex, CityEdge> grid;
 
+    private Taxi quickTaxi;
+    private Taxi cheapTaxi;
     private GraphWalk<CityVertex,CityEdge> shortestPath;
     private GraphWalk<CityVertex,CityEdge> cheapestPath;
 
@@ -67,6 +68,7 @@ public class CityGraph {
 
     }
 
+    // Two classes handle the two different kind of searches, and two threads are spawned accordingly
     public void calculatePaths(CityVertex source, CityVertex target) throws InterruptedException, ExecutionException {
         ShortestPathCalculator shortestPathCalculator = new ShortestPathCalculator(grid,taxis,source,target);
         CheapestPathCalculator cheapestPathCalculator = new CheapestPathCalculator(grid,taxis,source,target);
@@ -75,21 +77,22 @@ public class CityGraph {
         Callable<GraphWalk<CityVertex,CityEdge>> r2 = cheapestPathCalculator::calculate;
         ArrayList<Callable<GraphWalk<CityVertex,CityEdge>>> callable = new ArrayList<>(Arrays.asList(r1,r2));
         ArrayList<Future<GraphWalk<CityVertex,CityEdge>>> results = new ArrayList<>(executor.invokeAll(callable,60, TimeUnit.SECONDS));
+        quickTaxi = shortestPathCalculator.getChosenTaxi();
+        cheapTaxi = cheapestPathCalculator.getChosenTaxi();
         shortestPath = results.get(0).get();
         cheapestPath = results.get(1).get();
         executor.shutdown();
     }
 
-    // The standard weighted graph to take money into account
-    public DijkstraShortestPath<CityVertex,CityEdge> getLeastExpensivePath(CityVertex source, CityVertex target) {
-        DijkstraShortestPath<CityVertex,CityEdge> dijkstra_moneywise = new DijkstraShortestPath<>(grid);
-        System.out.println(dijkstra_moneywise.getPath(new CityVertex(1,1),new CityVertex(8,10)));
-        return dijkstra_moneywise;
+    public GraphWalk<CityVertex, CityEdge> getShortestPath() {
+        return shortestPath;
     }
 
+    public GraphWalk<CityVertex, CityEdge> getCheapestPath() {
+        return cheapestPath;
+    }
 
-
-    // Grid can be exported to a basic dot com.taxi.springboot.graph
+    // A raw method to export to dot file our grid graph. Debug reasons only
     public void dotExport(File path) throws IOException {
         Function<CityVertex,String> extractor = a -> ("node_" + a.toString())
                                                         .replace("(","")
@@ -97,19 +100,6 @@ public class CityGraph {
                                                         .replace(",","_");
         DOTExporter dotExporter = new DOTExporter(extractor);
         dotExporter.exportGraph(grid, new FileWriter(path));
-    }
-
-
-    public String getCity() {
-        return city;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     // Inner class to track and order taxis with the associated weight of their path

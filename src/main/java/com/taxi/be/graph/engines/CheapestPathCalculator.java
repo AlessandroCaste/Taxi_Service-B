@@ -10,7 +10,6 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.concurrent.Future;
 import java.util.function.Function;
 
 public class CheapestPathCalculator {
@@ -19,6 +18,7 @@ public class CheapestPathCalculator {
     private ArrayList<Taxi> taxis;
     private CityVertex source;
     private CityVertex target;
+    private Taxi chosenTaxi;
 
     public CheapestPathCalculator(SimpleWeightedGraph<CityVertex,CityEdge> grid, ArrayList<Taxi> taxis, CityVertex source, CityVertex target) {
         this.grid = grid;
@@ -38,14 +38,20 @@ public class CheapestPathCalculator {
             routesPrice.add(new RoutesPrice(taxi, path.getWeight()));
         }
         routesPrice.sort(Comparator.comparingDouble(taxiWeight -> taxiWeight.price));
-        GraphWalk<CityVertex,CityEdge> cheapestPath = cheapestPaths.get(routesPrice.get(0).taxi);
+        chosenTaxi = routesPrice.get(0).taxi;
+        GraphWalk<CityVertex,CityEdge> cheapestPath = cheapestPaths.get(chosenTaxi);
 
         // Calculating the road from the user to the target
-        GraphWalk<CityVertex,CityEdge> routini = (GraphWalk<CityVertex, CityEdge>) dijkstra_moneywise.getPath(source, target);
+        GraphWalk<CityVertex,CityEdge> userToTarget = (GraphWalk<CityVertex, CityEdge>) dijkstra_moneywise.getPath(source, target);
         // Joining the two parts of the route
         Function<GraphWalk<CityVertex,CityEdge>,Double> ciao = GraphWalk::getWeight;
-        GraphWalk<CityVertex,CityEdge> totalRoute = cheapestPath.concat(routini,ciao);
+        GraphWalk<CityVertex,CityEdge> totalRoute = cheapestPath.concat(userToTarget,ciao);
+        System.out.println("B");
         return totalRoute;
+    }
+
+    public Taxi getChosenTaxi() {
+        return chosenTaxi;
     }
 
     // A utility class to track to order taxis by the length of their route

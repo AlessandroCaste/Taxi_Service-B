@@ -11,7 +11,6 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.concurrent.Future;
 import java.util.function.Function;
 
 public class ShortestPathCalculator {
@@ -20,6 +19,7 @@ public class ShortestPathCalculator {
     private ArrayList<Taxi> taxis;
     private CityVertex source;
     private CityVertex target;
+    private Taxi chosenTaxi;
 
     public ShortestPathCalculator(SimpleWeightedGraph<CityVertex,CityEdge> grid, ArrayList<Taxi> taxis, CityVertex source, CityVertex target) {
         this.grid = grid;
@@ -41,16 +41,21 @@ public class ShortestPathCalculator {
             routesLength.add(new RoutesLength(taxi,shortPath.getLength()));
         }
         routesLength.sort(Comparator.comparingInt(taxi -> taxi.length));
-        GraphWalk<CityVertex,CityEdge> route = paths.get(routesLength.get(0).taxi);
+        chosenTaxi = routesLength.get(0).taxi;
+        GraphWalk<CityVertex,CityEdge> route = paths.get(chosenTaxi);
 
         // Calculating the road from the user to the target
-        GraphWalk<CityVertex,CityEdge> routini = (GraphWalk<CityVertex, CityEdge>) dijkstra_shortest.getPath(source, target);
+        GraphWalk<CityVertex,CityEdge> userToTarget = (GraphWalk<CityVertex, CityEdge>) dijkstra_shortest.getPath(source, target);
         // Joining the two parts of the route
         Function<GraphWalk<CityVertex,CityEdge>,Double> ciao = GraphWalk::getWeight;
-        GraphWalk<CityVertex,CityEdge> totalRoute = route.concat(routini,ciao);
+        GraphWalk<CityVertex,CityEdge> totalRoute = route.concat(userToTarget,ciao);
+        System.out.println("A");
         return totalRoute;
     }
 
+    public Taxi getChosenTaxi() {
+        return chosenTaxi;
+    }
 
     // A utility class to track to order taxis by the length of their route
     private class RoutesLength {
