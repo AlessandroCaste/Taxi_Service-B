@@ -1,7 +1,5 @@
 package com.taxi.be.exceptions;
 
-import net.bytebuddy.implementation.bytecode.Throw;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -36,7 +34,7 @@ public class RestResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    ResponseEntity<JsonResponse> handleGenericException() {
+    ResponseEntity<JsonResponse> handleGenericException(Throwable ex) {
         return new ResponseEntity<>(new JsonResponse("internal error",500),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

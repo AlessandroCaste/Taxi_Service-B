@@ -1,10 +1,10 @@
 package com.taxi.be.graph.engines;
 
+import com.taxi.be.graph.Solution;
 import com.taxi.be.graph.elements.CityEdge;
 import com.taxi.be.graph.elements.CityVertex;
 import com.taxi.be.input.user.Taxi;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
-import org.jgrapht.graph.AsUnweightedGraph;
 import org.jgrapht.graph.GraphWalk;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
@@ -28,10 +28,10 @@ public class ShortestPathCalculator {
         this.target = target;
     }
 
-    public GraphWalk<CityVertex,CityEdge> calculate() {
+    public Solution calculate() {
         // Producing a weightless version of our graph in order to safely get the shortest path
         // Hashmap stores the pats (Taxis are the key). Utility ArrayList is for quickly sorting out the best choice
-        DijkstraShortestPath<CityVertex, CityEdge> dijkstra_shortest = new DijkstraShortestPath<>(new AsUnweightedGraph<>(grid));
+        DijkstraShortestPath<CityVertex, CityEdge> dijkstra_shortest = new DijkstraShortestPath<>(grid);
         HashMap<Taxi, GraphWalk<CityVertex,CityEdge>> paths = new HashMap<>();
         ArrayList<RoutesLength> routesLength = new ArrayList<>();
 
@@ -42,15 +42,16 @@ public class ShortestPathCalculator {
         }
         routesLength.sort(Comparator.comparingInt(taxi -> taxi.length));
         chosenTaxi = routesLength.get(0).taxi;
-        GraphWalk<CityVertex,CityEdge> route = paths.get(chosenTaxi);
+        GraphWalk<CityVertex,CityEdge> quickestPath = paths.get(chosenTaxi);
 
         // Calculating the road from the user to the target
         GraphWalk<CityVertex,CityEdge> userToTarget = (GraphWalk<CityVertex, CityEdge>) dijkstra_shortest.getPath(source, target);
         // Joining the two parts of the route
-        Function<GraphWalk<CityVertex,CityEdge>,Double> ciao = GraphWalk::getWeight;
-        GraphWalk<CityVertex,CityEdge> totalRoute = route.concat(userToTarget,ciao);
-        System.out.println("A");
-        return totalRoute;
+        Function<GraphWalk<CityVertex,CityEdge>,Double> calculateTotalWeight = graph -> graph.getEdgeList().stream()
+                                                                                                .mapToDouble((x) -> grid.getEdgeWeight(x))
+                                                                                                .sum();
+        GraphWalk<CityVertex,CityEdge> completeRoute = quickestPath.concat(userToTarget,calculateTotalWeight);
+        return new Solution(quickestPath,completeRoute,chosenTaxi);
     }
 
     public Taxi getChosenTaxi() {

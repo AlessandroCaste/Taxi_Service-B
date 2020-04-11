@@ -11,7 +11,6 @@ import com.taxi.be.input.city.CityMap;
 import com.taxi.be.input.city.Wall;
 import com.taxi.be.input.user.Taxi;
 import org.jgrapht.generate.GridGraphGenerator;
-import org.jgrapht.graph.GraphWalk;
 import org.jgrapht.graph.SimpleWeightedGraph;
 import org.jgrapht.nio.dot.DOTExporter;
 
@@ -33,10 +32,8 @@ public class CityGraph {
     private ArrayList<Taxi> taxis;
     private SimpleWeightedGraph<CityVertex, CityEdge> grid;
 
-    private Taxi quickTaxi;
-    private Taxi cheapTaxi;
-    private GraphWalk<CityVertex,CityEdge> shortestPath;
-    private GraphWalk<CityVertex,CityEdge> cheapestPath;
+    private Solution quickSolution;
+    private Solution cheapSolution;
 
     public CityGraph(CityMap cityMap) {
         this.city = cityMap.getCityId();
@@ -65,7 +62,7 @@ public class CityGraph {
             CityEdge wallEdge = grid.getEdge(wall.getSourceAsCityVertex(),wall.getTargetAsCityVertex());
             grid.removeEdge(wallEdge);
         }
-
+        System.out.println("ciao core");
     }
 
     // Two classes handle the two different kind of searches, and two threads are spawned accordingly
@@ -73,23 +70,21 @@ public class CityGraph {
         ShortestPathCalculator shortestPathCalculator = new ShortestPathCalculator(grid,taxis,source,target);
         CheapestPathCalculator cheapestPathCalculator = new CheapestPathCalculator(grid,taxis,source,target);
         ExecutorService executor = Executors.newFixedThreadPool(2);
-        Callable<GraphWalk<CityVertex,CityEdge>> r1 = shortestPathCalculator::calculate;
-        Callable<GraphWalk<CityVertex,CityEdge>> r2 = cheapestPathCalculator::calculate;
-        ArrayList<Callable<GraphWalk<CityVertex,CityEdge>>> callable = new ArrayList<>(Arrays.asList(r1,r2));
-        ArrayList<Future<GraphWalk<CityVertex,CityEdge>>> results = new ArrayList<>(executor.invokeAll(callable,60, TimeUnit.SECONDS));
-        quickTaxi = shortestPathCalculator.getChosenTaxi();
-        cheapTaxi = cheapestPathCalculator.getChosenTaxi();
-        shortestPath = results.get(0).get();
-        cheapestPath = results.get(1).get();
+        Callable<Solution> r1 = shortestPathCalculator::calculate;
+        Callable<Solution> r2 = cheapestPathCalculator::calculate;
+        ArrayList<Callable<Solution>> callable = new ArrayList<>(Arrays.asList(r1,r2));
+        ArrayList<Future<Solution>> results = new ArrayList<>(executor.invokeAll(callable,60, TimeUnit.SECONDS));
+        quickSolution = results.get(0).get();
+        cheapSolution = results.get(1).get();
         executor.shutdown();
     }
 
-    public GraphWalk<CityVertex, CityEdge> getShortestPath() {
-        return shortestPath;
+    public Solution getShortestPath() {
+        return quickSolution;
     }
 
-    public GraphWalk<CityVertex, CityEdge> getCheapestPath() {
-        return cheapestPath;
+    public Solution getCheapestPath() {
+        return cheapSolution;
     }
 
     // A raw method to export to dot file our grid graph. Debug reasons only

@@ -1,5 +1,6 @@
 package com.taxi.be.graph.engines;
 
+import com.taxi.be.graph.Solution;
 import com.taxi.be.graph.elements.CityEdge;
 import com.taxi.be.graph.elements.CityVertex;
 import com.taxi.be.input.user.Taxi;
@@ -14,40 +15,40 @@ import java.util.function.Function;
 
 public class CheapestPathCalculator {
 
-    private SimpleWeightedGraph<CityVertex,CityEdge> grid;
+    private SimpleWeightedGraph<CityVertex, CityEdge> grid;
     private ArrayList<Taxi> taxis;
     private CityVertex source;
     private CityVertex target;
     private Taxi chosenTaxi;
 
-    public CheapestPathCalculator(SimpleWeightedGraph<CityVertex,CityEdge> grid, ArrayList<Taxi> taxis, CityVertex source, CityVertex target) {
+    public CheapestPathCalculator(SimpleWeightedGraph<CityVertex, CityEdge> grid, ArrayList<Taxi> taxis, CityVertex source, CityVertex target) {
         this.grid = grid;
         this.taxis = taxis;
         this.source = source;
         this.target = target;
     }
 
-    public GraphWalk<CityVertex,CityEdge> calculate() {
+    public Solution calculate() {
         DijkstraShortestPath<CityVertex, CityEdge> dijkstra_moneywise = new DijkstraShortestPath<>(grid);
         ArrayList<RoutesPrice> routesPrice = new ArrayList<>();
-        HashMap<Taxi, GraphWalk<CityVertex,CityEdge>> cheapestPaths = new HashMap<>();
+        HashMap<Taxi, GraphWalk<CityVertex, CityEdge>> cheapestPaths = new HashMap<>();
 
-        for(Taxi taxi : taxis) {
+        for (Taxi taxi : taxis) {
             GraphWalk<CityVertex, CityEdge> path = (GraphWalk<CityVertex, CityEdge>) dijkstra_moneywise.getPath(taxi.getPositionAsCityVertex(), source);
-            cheapestPaths.put(taxi,path);
+            cheapestPaths.put(taxi, path);
             routesPrice.add(new RoutesPrice(taxi, path.getWeight()));
         }
         routesPrice.sort(Comparator.comparingDouble(taxiWeight -> taxiWeight.price));
         chosenTaxi = routesPrice.get(0).taxi;
-        GraphWalk<CityVertex,CityEdge> cheapestPath = cheapestPaths.get(chosenTaxi);
+        GraphWalk<CityVertex, CityEdge> cheapestPath = cheapestPaths.get(chosenTaxi);
 
         // Calculating the road from the user to the target
-        GraphWalk<CityVertex,CityEdge> userToTarget = (GraphWalk<CityVertex, CityEdge>) dijkstra_moneywise.getPath(source, target);
-        // Joining the two parts of the route
-        Function<GraphWalk<CityVertex,CityEdge>,Double> ciao = GraphWalk::getWeight;
-        GraphWalk<CityVertex,CityEdge> totalRoute = cheapestPath.concat(userToTarget,ciao);
-        System.out.println("B");
-        return totalRoute;
+        GraphWalk<CityVertex, CityEdge> userToTarget = (GraphWalk<CityVertex, CityEdge>) dijkstra_moneywise.getPath(source, target);
+        Function<GraphWalk<CityVertex,CityEdge>,Double> calculateTotalWeight = graph -> graph.getEdgeList().stream()
+                                                                                        .mapToDouble((x) -> grid.getEdgeWeight(x))
+                                                                                        .sum();
+        GraphWalk<CityVertex,CityEdge> completeRoute = cheapestPath.concat(userToTarget, calculateTotalWeight);
+        return new Solution(cheapestPath,completeRoute,chosenTaxi);
     }
 
     public Taxi getChosenTaxi() {
@@ -64,6 +65,5 @@ public class CheapestPathCalculator {
             this.price = price;
         }
     }
-
 
 }

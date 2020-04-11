@@ -1,21 +1,21 @@
 package com.taxi.be;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taxi.be.graph.CityGraph;
-import com.taxi.be.graph.elements.CityEdge;
-import com.taxi.be.graph.elements.CityVertex;
+import com.taxi.be.graph.Solution;
 import com.taxi.be.input.city.CityMap;
 import com.taxi.be.input.user.UserRequest;
 import com.taxi.be.repository.MapRepository;
 import com.taxi.be.repository.TaxiRepository;
-import org.jgrapht.graph.GraphWalk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
-import java.util.HashMap;
 import java.util.Optional;
+import java.util.concurrent.Future;
 
 @Service
 public class GraphsManager {
@@ -30,25 +30,20 @@ public class GraphsManager {
         this.mapRepository = mapRepository;
     }
 
-    private HashMap<String, CityGraph> cityGraphHashMap = new HashMap<>();
-
     @Async("threadPoolTaskExecutor")
     @Transactional
-    public void request(String city, UserRequest userRequest) throws Exception {CityGraph referencedGraph;
-        if(cityGraphHashMap.containsKey(city))
-            referencedGraph = cityGraphHashMap.get(city);
-        else {
-            Optional<CityMap> foundCityMap = mapRepository.findById(city);
-            if(foundCityMap.isEmpty())
-                throw new NoResultException();
-            CityMap cityMap = foundCityMap.get();
-            referencedGraph = new CityGraph(cityMap);
-            cityGraphHashMap.put(city,referencedGraph);
-        }
-        referencedGraph.calculatePaths(userRequest.getSourceAsCityVertex(),userRequest.getDestinationAsCityVertex());
-        GraphWalk<CityVertex,CityEdge> shortestPath = referencedGraph.getShortestPath();
-        GraphWalk<CityVertex,CityEdge> cheapestPath = referencedGraph.getCheapestPath();
+    public Future<String> request(String city, UserRequest userRequest) throws Exception {
+        Optional<CityMap> foundCityMap = mapRepository.findById(city);
+        if(foundCityMap.isEmpty())
+            throw new NoResultException();
+        CityMap cityMap = foundCityMap.get();
+        CityGraph cityGraph = new CityGraph(cityMap);
+        cityGraph.calculatePaths(userRequest.getSourceAsCityVertex(),userRequest.getDestinationAsCityVertex());
+        Solution quickSolution = cityGraph.getShortestPath();
+        Solution cheapSolution = cityGraph.getCheapestPath();
+        Response response = new Response(quickSolution,cheapSolution);
+        String jsonResponse = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(response);
+        return new AsyncResult<>(jsonResponse);
     }
-
 
 }

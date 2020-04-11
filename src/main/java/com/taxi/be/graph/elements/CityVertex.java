@@ -5,9 +5,17 @@ public class CityVertex {
     int x;
     int y;
 
-    public CityVertex(int coordinate_x,int coordinate_y) {
-        this.x = coordinate_x;
-        this.y = coordinate_y;
+    public CityVertex(int x,int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     @Override
