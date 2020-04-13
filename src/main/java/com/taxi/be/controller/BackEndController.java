@@ -27,7 +27,8 @@ public class BackEndController {
     @RequestMapping(value = "{city}/user_requests/", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> computeRoute(@PathVariable(value = "city") String city, @Valid @RequestBody UserRequest userRequest)
     throws Exception {
-        Future<String> futureResponse = graphsManager.request(city,userRequest);
+        userRequest.setCityId(city);
+        Future<String> futureResponse = graphsManager.request(userRequest);
         String response = futureResponse.get();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

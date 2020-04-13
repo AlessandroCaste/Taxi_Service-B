@@ -14,7 +14,6 @@ import org.jgrapht.generate.GridGraphGenerator;
 import org.jgrapht.graph.SimpleWeightedGraph;
 import org.jgrapht.nio.dot.DOTExporter;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,7 +61,6 @@ public class CityGraph {
             CityEdge wallEdge = grid.getEdge(wall.getSourceAsCityVertex(),wall.getTargetAsCityVertex());
             grid.removeEdge(wallEdge);
         }
-        System.out.println("ciao core");
     }
 
     // Two classes handle the two different kind of searches, and two threads are spawned accordingly
@@ -87,24 +85,15 @@ public class CityGraph {
         return cheapSolution;
     }
 
-    // A raw method to export to dot file our grid graph. Debug reasons only
-    public void dotExport(File path) throws IOException {
-        Function<CityVertex,String> extractor = a -> ("node_" + a.toString())
-                                                        .replace("(","")
-                                                        .replace(")","")
-                                                        .replace(",","_");
-        DOTExporter dotExporter = new DOTExporter(extractor);
-        dotExporter.exportGraph(grid, new FileWriter(path));
-    }
-
-    // Inner class to track and order taxis with the associated weight of their path
-    private class TaxiWeight {
-        Taxi taxi;
-        double weight;
-
-        TaxiWeight(Taxi taxi,double weight) {
-            this.taxi = taxi;
-            this.weight = weight;
+    // Testing/debug method to check graph construction
+    public void export() {
+        Function<CityVertex,String> nameExtractor = (x) -> x.toString().replaceAll("[(),]","");
+        DOTExporter<CityVertex,CityEdge> exporter = new DOTExporter<>(nameExtractor);
+        try {
+            FileWriter writer = new FileWriter("src/test/output/grid.dot");
+            exporter.exportGraph(grid,writer);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

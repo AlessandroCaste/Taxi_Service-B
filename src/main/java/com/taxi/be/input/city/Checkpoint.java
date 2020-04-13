@@ -21,7 +21,7 @@ public class Checkpoint implements Serializable {
     public Checkpoint() {}
 
     public Checkpoint(float price, int x1, int y1, int x2, int y2) {
-        this.price = price;
+        this.price = price + 1;
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;

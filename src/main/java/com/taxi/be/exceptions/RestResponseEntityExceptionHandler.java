@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
@@ -24,12 +23,6 @@ public class RestResponseEntityExceptionHandler {
     @ResponseBody
     ResponseEntity<JsonResponse> handleHttpMessageNotReadableException(HttpServletRequest request, Throwable ex) {
         return new ResponseEntity<>(new JsonResponse("malformed submission",400),HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(NoResultException.class)
-    @ResponseBody
-    ResponseEntity<JsonResponse> handleNoResultException(Throwable x) {
-        return new ResponseEntity<>(new JsonResponse("requested map does not exist",400),HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

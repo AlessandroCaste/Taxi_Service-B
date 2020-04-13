@@ -1,20 +1,22 @@
 package com.taxi.be;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.taxi.be.exceptions.InvalidMapException;
 import com.taxi.be.graph.CityGraph;
 import com.taxi.be.graph.Solution;
+import com.taxi.be.graph.elements.CityVertex;
 import com.taxi.be.input.city.CityMap;
 import com.taxi.be.input.user.UserRequest;
 import com.taxi.be.repository.MapRepository;
-import com.taxi.be.repository.TaxiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 @Service
@@ -23,27 +25,46 @@ public class GraphsManager {
     @Autowired
     MapRepository mapRepository;
 
-    @Autowired
-    TaxiRepository taxiRepository;
-
     public void setMapRepository(MapRepository mapRepository) {
         this.mapRepository = mapRepository;
     }
 
     @Async("threadPoolTaskExecutor")
     @Transactional
-    public Future<String> request(String city, UserRequest userRequest) throws Exception {
-        Optional<CityMap> foundCityMap = mapRepository.findById(city);
+    public Future<String> request(UserRequest userRequest) {
+        String jsonResponse;
+        try {
+            CityGraph cityGraph = produceGraph(userRequest);
+            Response response = calculatePaths(userRequest.getSource(),userRequest.getDestination(),cityGraph);
+            jsonResponse = processJson(response);
+        } catch (Exception e ) {
+            jsonResponse = "no path data can be retrieved";
+        }
+        return new AsyncResult<>(jsonResponse);
+    }
+
+    private CityGraph produceGraph(UserRequest userRequest) throws InvalidMapException {
+        Optional<CityMap> foundCityMap = mapRepository.findById(userRequest.getCityId());
         if(foundCityMap.isEmpty())
-            throw new NoResultException();
+            throw new InvalidMapException();
         CityMap cityMap = foundCityMap.get();
-        CityGraph cityGraph = new CityGraph(cityMap);
-        cityGraph.calculatePaths(userRequest.getSourceAsCityVertex(),userRequest.getDestinationAsCityVertex());
+        if(cityMap.getTaxis().isEmpty())
+            throw new InvalidMapException();
+        return new CityGraph(cityMap);
+    }
+
+    private Response calculatePaths(CityVertex source, CityVertex destination, CityGraph cityGraph) throws ExecutionException, InterruptedException {
+        cityGraph.calculatePaths(source, destination);
         Solution quickSolution = cityGraph.getShortestPath();
         Solution cheapSolution = cityGraph.getCheapestPath();
-        Response response = new Response(quickSolution,cheapSolution);
+        return new Response(quickSolution,cheapSolution);
+    }
+
+    private String processJson(Response response) throws JsonProcessingException {
         String jsonResponse = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(response);
-        return new AsyncResult<>(jsonResponse);
+        if (jsonResponse == null)
+            jsonResponse = "no response exists for the requested path";
+        return  jsonResponse;
     }
 
 }

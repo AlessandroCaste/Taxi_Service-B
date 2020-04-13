@@ -2,6 +2,7 @@ package com.taxi.be.input.user;
 
 import com.taxi.be.graph.elements.CityVertex;
 import com.taxi.be.input.city.CityMap;
+
 import javax.persistence.*;
 
 @Entity
@@ -29,11 +30,6 @@ public class Taxi {
 
     public String getTaxiId() {
         return taxiId;
-    }
-
-    private void setPosition(Coordinate position) {
-        x = position.getX();
-        y = position.getY();
     }
 
     public void setCityMap(CityMap cityMap) {

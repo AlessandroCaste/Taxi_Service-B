@@ -1,5 +1,6 @@
 package com.taxi.be.graph.engines;
 
+import com.taxi.be.exceptions.NoPathException;
 import com.taxi.be.graph.Solution;
 import com.taxi.be.graph.elements.CityEdge;
 import com.taxi.be.graph.elements.CityVertex;
@@ -11,6 +12,7 @@ import org.jgrapht.graph.SimpleWeightedGraph;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 
 public class CheapestPathCalculator {
@@ -28,7 +30,7 @@ public class CheapestPathCalculator {
         this.target = target;
     }
 
-    public Solution calculate() {
+    public Solution calculate() throws ExecutionException {
         DijkstraShortestPath<CityVertex, CityEdge> dijkstra_moneywise = new DijkstraShortestPath<>(grid);
         ArrayList<RoutesPrice> routesPrice = new ArrayList<>();
         HashMap<Taxi, GraphWalk<CityVertex, CityEdge>> cheapestPaths = new HashMap<>();
@@ -47,6 +49,10 @@ public class CheapestPathCalculator {
         Function<GraphWalk<CityVertex,CityEdge>,Double> calculateTotalWeight = graph -> graph.getEdgeList().stream()
                                                                                         .mapToDouble((x) -> grid.getEdgeWeight(x))
                                                                                         .sum();
+        // In case no path existed
+        if(cheapestPath == null || userToTarget == null)
+            throw new NoPathException();
+        // Solution wrapping
         GraphWalk<CityVertex,CityEdge> completeRoute = cheapestPath.concat(userToTarget, calculateTotalWeight);
         return new Solution(cheapestPath,completeRoute,chosenTaxi);
     }

@@ -10,6 +10,14 @@ public class UserRequest {
     private String cityId;
     private int x1,y1,x2,y2;
 
+    public UserRequest(String cityId,int x1,int y1,int x2,int y2) {
+        this.cityId = cityId;
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+    }
+
     @JsonProperty("source")
     public void parseSource(Map<String,Integer> source) {
         this.x1 = source.get("x");
@@ -22,12 +30,21 @@ public class UserRequest {
         this.y2 = destination.get("y");
     }
 
-    public CityVertex getSourceAsCityVertex() {
+    public String getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
+    }
+
+    public CityVertex getSource() {
         return new CityVertex(x1,y1);
     }
 
-    public CityVertex getDestinationAsCityVertex() {
+    public CityVertex getDestination() {
         return new CityVertex(x2,y2);
     }
+
 
 }
