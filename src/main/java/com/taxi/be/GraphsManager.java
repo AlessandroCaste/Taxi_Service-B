@@ -38,7 +38,7 @@ public class GraphsManager {
             Response response = calculatePaths(userRequest.getSource(),userRequest.getDestination(),cityGraph);
             jsonResponse = processJson(response);
         } catch (Exception e ) {
-            jsonResponse = "no path data can be retrieved";
+            jsonResponse = "no path can be retrieved";
         }
         return new AsyncResult<>(jsonResponse);
     }

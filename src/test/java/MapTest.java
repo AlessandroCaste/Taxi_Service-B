@@ -22,7 +22,6 @@ import java.util.concurrent.Future;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes= Application.class)
@@ -67,25 +66,25 @@ public class MapTest {
         mapRepository.save(basicTest);
 
         // Analyzing the answer
-        Future<String> response = graphsManager.request(new UserRequest("basic",1,2,5,2));
+        Future<String> response = graphsManager.request(new UserRequest("basic", 1, 2, 5, 2));
         String extractedResponse = response.get();
-        assertThat(extractedResponse.replaceAll("[\\n\\r\\s]","").contains(
+        assertThat(extractedResponse.replaceAll("[\\n\\r\\s]", "").contains(
                 "\"cost\":16.0," +
-                "\"distance\":4," +
-                "\"travelTime\":0.08," +
-                "\"waitTime\":0.0"
-                ),is(true));
-        assertThat(extractedResponse.replaceAll("[\\n\\r\\s]","").contains(
+                        "\"distance\":4," +
+                        "\"travelTime\":0.08," +
+                        "\"waitTime\":0.0"
+        ), is(true));
+        assertThat(extractedResponse.replaceAll("[\\n\\r\\s]", "").contains(
                 "\"cost\":6.0," +
-                "\"distance\":6," +
-                "\"travelTime\":0.12," +
-                "\"waitTime\":0.0"
-                ),is(true));
+                        "\"distance\":6," +
+                        "\"travelTime\":0.12," +
+                        "\"waitTime\":0.0"
+        ), is(true));
     }
 
     // Map 2 has no valid path for the request
     @Test
-    public void noPathRequest() {
+    public void noPathRequest() throws ExecutionException, InterruptedException {
         // The map with split into two unreachable chunks by its walls
         CityMap unsolvable = new CityMap("unsolvable", 10, 2);
 
@@ -103,13 +102,8 @@ public class MapTest {
 
         mapRepository.save(unsolvable);
 
-        assertThrows(ExecutionException.class, () -> {
-            Future<String> response = graphsManager.request(new UserRequest("unsolvable",1,1,5,1));
-            response.get();
-        });
-
+        Future<String> response = graphsManager.request(new UserRequest("unsolvable",1,1,5,1));
+        assertThat(response.get().equals("no path can be retrieved"),is(true));
     }
-
-
 
 }
