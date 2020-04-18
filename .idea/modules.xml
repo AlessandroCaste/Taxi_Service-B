@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Taxi_Service_BackEnd.iml" filepath="$PROJECT_DIR$/Taxi_Service_BackEnd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Taxi_Service_B.iml" filepath="$PROJECT_DIR$/Taxi_Service_B.iml" />
     </modules>
   </component>
 </project>
