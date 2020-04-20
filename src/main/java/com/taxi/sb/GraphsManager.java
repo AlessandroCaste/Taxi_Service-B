@@ -4,12 +4,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taxi.sb.exceptions.InvalidMapException;
 import com.taxi.sb.graph.CityGraph;
-import com.taxi.sb.response.Response;
-import com.taxi.sb.response.Solution;
 import com.taxi.sb.graph.elements.CityVertex;
 import com.taxi.sb.input.city.CityMap;
 import com.taxi.sb.input.user.UserRequest;
-import com.taxi.sb.repository.MapRepository;
+import com.taxi.sb.repositories.MapRepository;
+import com.taxi.sb.response.Response;
+import com.taxi.sb.response.Solution;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -22,6 +25,8 @@ import java.util.concurrent.Future;
 
 @Service
 public class GraphsManager {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(GraphsManager.class.getName());
 
     @Autowired
     MapRepository mapRepository;
@@ -39,7 +44,8 @@ public class GraphsManager {
             Response response = calculatePaths(userRequest.getSource(),userRequest.getDestination(),cityGraph);
             jsonResponse = processJson(response);
         } catch (Exception e ) {
-            jsonResponse = "no path can be retrieved";
+            jsonResponse = processErrorJson();
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
         }
         return new AsyncResult<>(jsonResponse);
     }
@@ -62,10 +68,11 @@ public class GraphsManager {
     }
 
     private String processJson(Response response) throws JsonProcessingException {
-        String jsonResponse = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(response);
-        if (jsonResponse == null)
-            jsonResponse = "no response exists for the requested path";
-        return  jsonResponse;
+        return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(response);
+    }
+
+    private String processErrorJson()  {
+        return "{\"message:\"request cannot be processed\",\"status:\"400\"}";
     }
 
 }

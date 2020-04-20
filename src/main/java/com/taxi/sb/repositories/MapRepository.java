@@ -1,4 +1,4 @@
-package com.taxi.sb.repository;
+package com.taxi.sb.repositories;
 
 import com.taxi.sb.input.city.CityMap;
 import org.springframework.data.jpa.repository.JpaRepository;

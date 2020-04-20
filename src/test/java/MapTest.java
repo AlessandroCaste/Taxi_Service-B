@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.taxi.sb.Application;
 import com.taxi.sb.GraphsManager;
 import com.taxi.sb.input.city.Checkpoint;
@@ -5,7 +6,7 @@ import com.taxi.sb.input.city.CityMap;
 import com.taxi.sb.input.city.Wall;
 import com.taxi.sb.input.user.Taxi;
 import com.taxi.sb.input.user.UserRequest;
-import com.taxi.sb.repository.MapRepository;
+import com.taxi.sb.repositories.MapRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +85,7 @@ public class MapTest {
 
     // Map 2 has no valid path for the request
     @Test
-    public void noPathRequest() throws ExecutionException, InterruptedException {
+    public void noPathRequest() throws ExecutionException, InterruptedException, JsonProcessingException {
         // The map with split into two unreachable chunks by its walls
         CityMap unsolvable = new CityMap("unsolvable", 10, 2);
 
@@ -103,7 +104,7 @@ public class MapTest {
         mapRepository.save(unsolvable);
 
         Future<String> response = graphsManager.request(new UserRequest("unsolvable",1,1,5,1));
-        assertThat(response.get().equals("no path can be retrieved"),is(true));
+        assertThat(response.get().equals("{\"message:\"request cannot be processed\",\"status:\"400\"}"),is(true));
     }
 
 }

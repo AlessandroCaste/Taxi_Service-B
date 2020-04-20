@@ -14,6 +14,8 @@ import com.taxi.sb.response.Solution;
 import org.jgrapht.generate.GridGraphGenerator;
 import org.jgrapht.graph.SimpleWeightedGraph;
 import org.jgrapht.nio.dot.DOTExporter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -24,7 +26,7 @@ import java.util.function.Function;
 
 public class CityGraph {
 
-    private String city;
+    private String cityId;
     private int width;
     private int height;
     private ArrayList<Wall> walls;
@@ -35,8 +37,10 @@ public class CityGraph {
     private Solution quickSolution;
     private Solution cheapSolution;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CityGraph.class.getName());
+
     public CityGraph(CityMap cityMap) {
-        this.city = cityMap.getCityId();
+        this.cityId = cityMap.getCityId();
         this.width = cityMap.getWidth();
         this.height = cityMap.getHeight();
         this.walls = new ArrayList<>(cityMap.getWalls());
@@ -51,7 +55,7 @@ public class CityGraph {
         GridGraphGenerator<CityVertex,CityEdge> gridGraphGenerator = new GridGraphGenerator<>(height,width);
         gridGraphGenerator.generateGraph(grid,null);
 
-        // Adding checkpoints
+       // Adding checkpoints
        for (Checkpoint checkpoint : checkpoints) {
             CityEdge checkpointEdge = grid.getEdge(checkpoint.getSourceAsCityVertex(),checkpoint.getTargetCityVertex());
             grid.setEdgeWeight(checkpointEdge,checkpoint.getPrice());
@@ -62,6 +66,8 @@ public class CityGraph {
             CityEdge wallEdge = grid.getEdge(wall.getSourceAsCityVertex(),wall.getTargetAsCityVertex());
             grid.removeEdge(wallEdge);
         }
+
+        LOGGER.debug("City graph " + cityId + " has been successfully created");
     }
 
     // Two classes handle the two different kind of searches, and two threads are spawned accordingly
