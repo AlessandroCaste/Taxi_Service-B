@@ -2,35 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="713bb4a2-0c25-4269-b6c4-ccbb47ee318b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_buffer_4_1_45_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_4_1_45_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_http2_4_1_45_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_http_4_1_45_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_codec_socks_4_1_45_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_common_4_1_45_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_4_1_45_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_handler_proxy_4_1_45_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_resolver_4_1_45_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_4_1_45_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_epoll_linux_x86_64_4_1_45_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_netty_netty_transport_native_unix_common_4_1_45_Final.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_netty_reactor_netty_0_9_5_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_projectreactor_reactor_core_3_3_3_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jakarta_el_3_0_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_reactivestreams_reactive_streams_1_0_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_reactor_netty_2_2_5_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_webflux_2_2_5_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webflux_5_2_4_RELEASE.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_synchronoss_cloud_nio_multipart_parser_1_1_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_synchronoss_cloud_nio_stream_storage_1_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/logback.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/taxi/sb/GraphsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/taxi/sb/GraphsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/taxi/sb/controller/BackEndController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/taxi/sb/controller/BackEndController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/taxi/sb/exceptions/RestResponseEntityExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/taxi/sb/exceptions/RestResponseEntityExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/taxi/sb/graph/CityGraph.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/taxi/sb/graph/CityGraph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/taxi/sb/graph/engines/CheapestPathCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/taxi/sb/graph/engines/CheapestPathCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/taxi/sb/graph/engines/ShortestPathCalculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/taxi/sb/graph/engines/ShortestPathCalculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/taxi/sb/repository/CheckpointRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/taxi/sb/repository/MapRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/taxi/sb/repositories/MapRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/taxi/sb/repository/TaxiRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/taxi/sb/repository/WallRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MapTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/MapTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +43,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="11" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../7thSea" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Synkrisis" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15865384" />
     <property name="project.structure.side.proportion" value="0.25664622" />
@@ -71,26 +56,54 @@
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.taxi.be.controller" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.FrontEnd">
-    <configuration name="BackEnd" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="com.taxi.be.Application" />
-      <module name="Taxi_Service_BackEnd" />
+  <component name="RunManager" selected="Application.Application">
+    <configuration name="Application" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.taxi.sb.Application" />
+      <module name="Taxi_Service_B" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FrontEnd" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="com.taxi.fe.Application" />
-      <module name="Taxi_Service_FrontEnd" />
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.taxi.Application" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MapTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Taxi_Service_B" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="MapTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MapTest.noPathRequest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Taxi_Service_B" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="MapTest" />
+      <option name="METHOD_NAME" value="noPathRequest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.FrontEnd" />
-      <item itemvalue="Application.BackEnd" />
+      <item itemvalue="Application.Application" />
+      <item itemvalue="JUnit.MapTest.noPathRequest" />
+      <item itemvalue="JUnit.MapTest" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.MapTest" />
+        <item itemvalue="JUnit.MapTest.noPathRequest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -115,6 +128,14 @@
       <option name="presentableId" value="Default" />
       <updated>1585308344592</updated>
     </task>
+    <task id="LOCAL-00001" summary="Repackaging">
+      <created>1587212504404</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1587212504404</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -123,16 +144,19 @@
       <path value="$PROJECT_DIR$" />
       <path value="$PROJECT_DIR$/Taxi_Service_FrontEnd" />
     </ignored-roots>
+    <MESSAGE value="Repackaging" />
+    <option name="LAST_COMMIT_MESSAGE" value="Repackaging" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="184" key="#Project_Structure" timestamp="1585310975587">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="552" y="184" key="#Project_Structure/0.0.1920.1050@0.0.1920.1050" timestamp="1585310975587" />
-    <state x="414" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585393324639">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="414" y="296" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587207324957">
+      <screen x="0" y="111" width="1920" height="1080" />
     </state>
     <state x="414" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1585393324639" />
+    <state x="414" y="296" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1080/0.111.1920.1080@0.111.1920.1080" timestamp="1587207324957" />
     <state x="765" y="222" key="#com.intellij.ide.util.MemberChooser" timestamp="1585421815973">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -141,6 +165,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="689" y="309" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1585393316993" />
+    <state x="808" y="445" width="293" height="223" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1586964710822">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="808" y="445" width="293" height="223" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1586964710822" />
     <state x="636" y="377" width="647" height="305" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1585394988594">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -153,66 +181,97 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="690" y="272" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1585393874186" />
-    <state x="645" y="34" key="CommitChangelistDialog2" timestamp="1585423432700">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="3057" y="389" key="#xdebugger.evaluate" timestamp="1587220561418">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="3057" y="389" key="#xdebugger.evaluate/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587220561418" />
+    <state x="2565" y="35" width="770" height="836" key="CommitChangelistDialog2" timestamp="1587417487833">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="645" y="34" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1585423432700" />
-    <state x="740" y="235" key="FileChooserDialogImpl" timestamp="1585404004724">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="2565" y="35" width="770" height="836" key="CommitChangelistDialog2/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587417487833" />
+    <state x="2660" y="242" width="424" height="491" key="FileChooserDialogImpl" timestamp="1587414283751">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="740" y="235" key="FileChooserDialogImpl/0.0.1920.1050@0.0.1920.1050" timestamp="1585404004724" />
+    <state x="740" y="263" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1586964733196" />
+    <state x="2660" y="242" key="FileChooserDialogImpl/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587414283751" />
     <state x="640" y="278" width="260" height="287" key="Github.ShareDialog" timestamp="1585310849023">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="640" y="278" width="260" height="287" key="Github.ShareDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1585310849023" />
-    <state width="1098" height="330" key="GridCell.Tab.0.bottom" timestamp="1585423575439">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1878" height="500" key="GridCell.Tab.0.bottom" timestamp="1587417460650">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1098" height="330" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1585423575439" />
-    <state width="1098" height="330" key="GridCell.Tab.0.center" timestamp="1585423575439">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1878" height="389" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1587119153433" />
+    <state width="1878" height="389" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.111.1920.1080@0.111.1920.1080" timestamp="1587208235578" />
+    <state width="1878" height="500" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587417460650" />
+    <state width="1878" height="500" key="GridCell.Tab.0.center" timestamp="1587417460650">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1098" height="330" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1585423575439" />
-    <state width="1098" height="330" key="GridCell.Tab.0.left" timestamp="1585423575439">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1878" height="389" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1587119153432" />
+    <state width="1878" height="389" key="GridCell.Tab.0.center/1920.0.1920.1080/0.111.1920.1080@0.111.1920.1080" timestamp="1587208235578" />
+    <state width="1878" height="500" key="GridCell.Tab.0.center/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587417460650" />
+    <state width="1878" height="500" key="GridCell.Tab.0.left" timestamp="1587417460650">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1098" height="330" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1585423575439" />
-    <state width="1098" height="330" key="GridCell.Tab.0.right" timestamp="1585423575439">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1878" height="389" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1587119153432" />
+    <state width="1878" height="389" key="GridCell.Tab.0.left/1920.0.1920.1080/0.111.1920.1080@0.111.1920.1080" timestamp="1587208235578" />
+    <state width="1878" height="500" key="GridCell.Tab.0.left/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587417460650" />
+    <state width="1878" height="500" key="GridCell.Tab.0.right" timestamp="1587417460650">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1098" height="330" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1585423575439" />
-    <state width="1098" height="330" key="GridCell.Tab.1.bottom" timestamp="1585423575439">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1878" height="389" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1587119153433" />
+    <state width="1878" height="389" key="GridCell.Tab.0.right/1920.0.1920.1080/0.111.1920.1080@0.111.1920.1080" timestamp="1587208235578" />
+    <state width="1878" height="500" key="GridCell.Tab.0.right/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587417460650" />
+    <state width="1878" height="342" key="GridCell.Tab.1.bottom" timestamp="1587220562419">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1098" height="330" key="GridCell.Tab.1.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1585423575439" />
-    <state width="1098" height="330" key="GridCell.Tab.1.center" timestamp="1585423575439">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1878" height="342" key="GridCell.Tab.1.bottom/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587220562419" />
+    <state width="1878" height="342" key="GridCell.Tab.1.center" timestamp="1587220562419">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1098" height="330" key="GridCell.Tab.1.center/0.0.1920.1050@0.0.1920.1050" timestamp="1585423575439" />
-    <state width="1098" height="330" key="GridCell.Tab.1.left" timestamp="1585423575439">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1878" height="342" key="GridCell.Tab.1.center/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587220562419" />
+    <state width="1878" height="342" key="GridCell.Tab.1.left" timestamp="1587220562419">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1098" height="330" key="GridCell.Tab.1.left/0.0.1920.1050@0.0.1920.1050" timestamp="1585423575439" />
-    <state width="1098" height="330" key="GridCell.Tab.1.right" timestamp="1585423575439">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state width="1878" height="342" key="GridCell.Tab.1.left/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587220562419" />
+    <state width="1878" height="342" key="GridCell.Tab.1.right" timestamp="1587220562419">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state width="1098" height="330" key="GridCell.Tab.1.right/0.0.1920.1050@0.0.1920.1050" timestamp="1585423575439" />
+    <state width="1878" height="342" key="GridCell.Tab.1.right/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587220562419" />
     <state x="625" y="224" key="NewModule_or_Project.wizard" timestamp="1585342606520">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="625" y="224" key="NewModule_or_Project.wizard/0.0.1920.1050@0.0.1920.1050" timestamp="1585342606520" />
-    <state x="440" y="100" key="SettingsEditor" timestamp="1585342628558">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="440" y="214" width="1024" height="852" key="SettingsEditor" timestamp="1587208206055">
+      <screen x="0" y="111" width="1920" height="1080" />
     </state>
     <state x="440" y="100" key="SettingsEditor/0.0.1920.1050@0.0.1920.1050" timestamp="1585342628558" />
-    <state x="552" y="254" key="Vcs.Push.Dialog.v2" timestamp="1585423523511">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="440" y="214" width="1024" height="852" key="SettingsEditor/1920.0.1920.1080/0.111.1920.1080@0.111.1920.1080" timestamp="1587208206055" />
+    <state x="2472" y="261" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1587417370161">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="552" y="254" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1585423523511" />
-    <state x="656" y="349" key="com.intellij.ide.util.TipDialog" timestamp="1585392292565">
-      <screen x="0" y="0" width="1920" height="1050" />
+    <state x="2472" y="261" width="800" height="535" key="Vcs.Push.Dialog.v2/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587417370161" />
+    <state x="2576" y="359" key="com.intellij.ide.util.TipDialog" timestamp="1587408194929">
+      <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="656" y="349" key="com.intellij.ide.util.TipDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1585392292565" />
+    <state x="656" y="377" key="com.intellij.ide.util.TipDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1587126304895" />
+    <state x="2576" y="359" key="com.intellij.ide.util.TipDialog/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587408194929" />
+    <state x="2563" y="284" width="634" height="538" key="find.popup" timestamp="1587416762420">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2563" y="284" width="634" height="538" key="find.popup/1920.0.1920.1080/0.111.1920.1080@1920.0.1920.1080" timestamp="1587416762420" />
     <state x="343" y="135" key="new project wizard" timestamp="1585339803143">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
@@ -234,6 +293,26 @@
           <url>file://$USER_HOME$/Desktop/Challenge/Taxi_Service_FrontEnd/src/main/java/com/taxi/fe/controller/MapController.java</url>
           <line>42</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/taxi/sb/controller/BackEndController.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/taxi/sb/exceptions/RestResponseEntityExceptionHandler.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/taxi/sb/controller/BackEndController.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/taxi/sb/GraphsManager.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
