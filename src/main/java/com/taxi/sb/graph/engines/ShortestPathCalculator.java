@@ -37,7 +37,7 @@ public class ShortestPathCalculator {
     }
 
     public Solution calculate() throws ExecutionException {
-        LOGGER.debug("Cheapest path calculation started for " + source.toString() + " -> " + target.toString());
+        LOGGER.debug("Shortest path calculation started for " + source.toString() + " -> " + target.toString());
 
         // Producing a weightless version of our graph in order to safely get the shortest path
         // Hashmap stores the paths (keys = taxis). Utility ArrayList is for quickly sorting out the best choice
@@ -61,12 +61,14 @@ public class ShortestPathCalculator {
                                                                                                 .mapToDouble((x) -> grid.getEdgeWeight(x))
                                                                                                 .sum();
         // In case no path existed
-        if(quickestPath == null || userToTarget == null)
-           throw new NoPathException();
+        if(quickestPath == null || userToTarget == null) {
+            LOGGER.error("No path exists for the chosen target and destination");
+            throw new NoPathException();
+        }
         // Solution wrapping
         GraphWalk<CityVertex,CityEdge> completeRoute = quickestPath.concat(userToTarget,calculateTotalWeight);
 
-        LOGGER.debug("Cheapest path calculation ended for " + source.toString() + " -> " + target.toString());
+        LOGGER.debug("Shortest path calculation ended for " + source.toString() + " -> " + target.toString());
         return new Solution(quickestPath,completeRoute,chosenTaxi);
     }
 

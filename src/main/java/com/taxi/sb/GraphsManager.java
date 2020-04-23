@@ -2,6 +2,8 @@ package com.taxi.sb;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.taxi.sb.exceptions.InvalidMapException;
 import com.taxi.sb.graph.CityGraph;
 import com.taxi.sb.graph.elements.CityVertex;
@@ -52,11 +54,15 @@ public class GraphsManager {
 
     private CityGraph produceGraph(UserRequest userRequest) throws InvalidMapException {
         Optional<CityMap> foundCityMap = mapRepository.findById(userRequest.getCityId());
-        if(foundCityMap.isEmpty())
+        if(foundCityMap.isEmpty()) {
+            LOGGER.error("Requested map " + userRequest.getCityId() + " is not stored");
             throw new InvalidMapException();
+        }
         CityMap cityMap = foundCityMap.get();
-        if(cityMap.getTaxis().isEmpty())
+        if(cityMap.getTaxis().isEmpty()) {
+            LOGGER.error("Requested map " + userRequest.getCityId() + " has no taxis");
             throw new InvalidMapException();
+        }
         return new CityGraph(cityMap);
     }
 
@@ -72,7 +78,7 @@ public class GraphsManager {
     }
 
     private String processErrorJson()  {
-        return "{\"message:\"request cannot be processed\",\"status:\"400\"}";
+        return new Gson().toJson(JsonParser.parseString("{\"message:\"request cannot be processed\",\"status:\"500\"}"));
     }
 
 }

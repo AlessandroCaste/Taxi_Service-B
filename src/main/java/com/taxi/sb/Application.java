@@ -1,5 +1,7 @@
 package com.taxi.sb;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +12,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @SpringBootApplication
 @EnableAsync
 public class Application {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Application.class.getName());
 
     @Bean("threadPoolTaskExecutor")
     public TaskExecutor getAsyncExecutor() {

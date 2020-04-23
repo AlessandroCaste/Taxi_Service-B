@@ -58,8 +58,10 @@ public class CheapestPathCalculator {
                                                                                         .mapToDouble((x) -> grid.getEdgeWeight(x))
                                                                                         .sum();
         // In case no path existed
-        if(cheapestPath == null || userToTarget == null)
+        if(cheapestPath == null || userToTarget == null) {
+            LOGGER.error("No path exists for the chosen target and destination");
             throw new NoPathException();
+        }
         // Solution wrapping
         GraphWalk<CityVertex,CityEdge> completeRoute = cheapestPath.concat(userToTarget, calculateTotalWeight);
 
