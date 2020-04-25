@@ -87,7 +87,7 @@ public class MapTest {
 
     // Map 2 has no valid path for the request
     @Test
-    public void noPathRequest() throws ExecutionException, InterruptedException, JsonProcessingException, InvalidMapException {
+    public void noPathRequest() {
         // The map with split into two unreachable chunks by its walls
         CityMap unsolvable = new CityMap("unsolvable", 10, 2);
 

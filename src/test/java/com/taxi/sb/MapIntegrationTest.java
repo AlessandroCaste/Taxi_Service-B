@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @TestPropertySource(
         locations = "classpath:application-integrationtest.properties")
-public class MapTestIntegrationController {
+public class MapIntegrationTest {
 
     @Autowired
     private MapRepository mapRepository;
