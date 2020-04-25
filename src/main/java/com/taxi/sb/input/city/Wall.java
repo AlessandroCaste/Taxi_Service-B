@@ -53,11 +53,11 @@ public class Wall implements Serializable {
         this.cityMap = cityMap;
     }
 
-    public CityVertex getSourceAsCityVertex() {
+    public CityVertex getSource() {
         return new CityVertex(x1,y1);
     }
 
-    public CityVertex getTargetAsCityVertex() {
+    public CityVertex getTarget() {
         return new CityVertex(x2,y2);
     }
 

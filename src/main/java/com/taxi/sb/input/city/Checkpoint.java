@@ -60,11 +60,11 @@ public class Checkpoint implements Serializable {
         return y2;
     }
 
-    public CityVertex getSourceAsCityVertex () {
+    public CityVertex getSource() {
         return new CityVertex(x1,y1);
     }
 
-    public CityVertex getTargetCityVertex() {
+    public CityVertex getTarget() {
         return new CityVertex(x2,y2);
     }
 

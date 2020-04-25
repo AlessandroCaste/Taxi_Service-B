@@ -13,7 +13,7 @@ import javax.validation.Valid;
 import java.util.concurrent.Future;
 
 @RestController
-public class BackEndController {
+public class ServiceController {
 
     @Autowired
     GraphsManager graphsManager;

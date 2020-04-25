@@ -11,6 +11,7 @@ import com.taxi.sb.input.city.CityMap;
 import com.taxi.sb.input.city.Wall;
 import com.taxi.sb.input.user.Taxi;
 import com.taxi.sb.response.Solution;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.jgrapht.generate.GridGraphGenerator;
 import org.jgrapht.graph.SimpleWeightedGraph;
 import org.jgrapht.nio.dot.DOTExporter;
@@ -57,13 +58,13 @@ public class CityGraph {
 
        // Adding checkpoints
        for (Checkpoint checkpoint : checkpoints) {
-            CityEdge checkpointEdge = grid.getEdge(checkpoint.getSourceAsCityVertex(),checkpoint.getTargetCityVertex());
+            CityEdge checkpointEdge = grid.getEdge(checkpoint.getSource(),checkpoint.getTarget());
             grid.setEdgeWeight(checkpointEdge,checkpoint.getPrice());
         }
 
         // Walls are modelled as the lack an edge between two nodes
         for (Wall wall : walls) {
-            CityEdge wallEdge = grid.getEdge(wall.getSourceAsCityVertex(),wall.getTargetAsCityVertex());
+            CityEdge wallEdge = grid.getEdge(wall.getSource(),wall.getTarget());
             grid.removeEdge(wallEdge);
         }
 
@@ -100,7 +101,7 @@ public class CityGraph {
             FileWriter writer = new FileWriter("src/test/output/grid.dot");
             exporter.exportGraph(grid,writer);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(ExceptionUtils.getStackTrace(e));
         }
     }
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.ExecutionException;
 
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler {
@@ -30,6 +31,20 @@ public class RestResponseEntityExceptionHandler {
     ResponseEntity<JsonResponse> handleHttpMessageNotReadableException(HttpServletRequest request, Throwable ex) {
         LOGGER.error(ExceptionUtils.getStackTrace(ex));
         return new ResponseEntity<>(new JsonResponse("malformed submission",400),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ExecutionException.class)
+    @ResponseBody
+    ResponseEntity<JsonResponse> handleExecutionException(HttpServletRequest request, Throwable ex) {
+        LOGGER.error(ExceptionUtils.getStackTrace(ex));
+        return new ResponseEntity<>(new JsonResponse("no path exists for the request",400),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidMapException.class)
+    @ResponseBody
+    ResponseEntity<JsonResponse> handleInvalidMapException(HttpServletRequest request, Throwable ex) {
+        LOGGER.error(ExceptionUtils.getStackTrace(ex));
+        return new ResponseEntity<>(new JsonResponse("invalid map request",400),HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

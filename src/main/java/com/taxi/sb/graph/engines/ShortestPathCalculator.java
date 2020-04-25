@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 
 public class ShortestPathCalculator {
@@ -36,26 +35,28 @@ public class ShortestPathCalculator {
         this.target = target;
     }
 
-    public Solution calculate() throws ExecutionException {
+    public Solution calculate() throws NoPathException {
         LOGGER.debug("Shortest path calculation started for " + source.toString() + " -> " + target.toString());
 
-        // Producing a weightless version of our graph in order to safely get the shortest path
-        // Hashmap stores the paths (keys = taxis). Utility ArrayList is for quickly sorting out the best choice
+        // Producing a weightless version of our graph in order to get the shortest path
+        // Hashmap stores the paths (keys = taxis). Utility ArrayList is for quickly sorting out the best choice by speed and price
         DijkstraShortestPath<CityVertex, CityEdge> dijkstra_shortest = new DijkstraShortestPath<>(new AsUnweightedGraph<>(grid));
         HashMap<Taxi, GraphWalk<CityVertex,CityEdge>> paths = new HashMap<>();
         ArrayList<RoutesLength> routesLength = new ArrayList<>();
 
         for(Taxi taxi : taxis) {
-            GraphWalk<CityVertex,CityEdge> shortPath = (GraphWalk<CityVertex, CityEdge>) dijkstra_shortest.getPath(taxi.getPositionAsCityVertex(), source);
+            GraphWalk<CityVertex,CityEdge> shortPath = (GraphWalk<CityVertex, CityEdge>) dijkstra_shortest.getPath(taxi.getPosition(), source);
             paths.put(taxi,shortPath);
-            routesLength.add(new RoutesLength(taxi,shortPath.getLength()));
+            double realWeight = shortPath.getEdgeList().stream().mapToDouble(e -> grid.getEdgeWeight(e)).sum();
+            if(shortPath!=null)
+                routesLength.add(new RoutesLength(taxi,shortPath.getLength(),realWeight));
         }
-        routesLength.sort(Comparator.comparingInt(taxi -> taxi.length));
+        routesLength.sort(Comparator.comparingInt( (RoutesLength route) -> route.length)
+                                    .thenComparingDouble( route -> route.price));
         chosenTaxi = routesLength.get(0).taxi;
         GraphWalk<CityVertex,CityEdge> quickestPath = paths.get(chosenTaxi);
-
-        // Calculating the road from the user to the target
         GraphWalk<CityVertex,CityEdge> userToTarget = (GraphWalk<CityVertex, CityEdge>) dijkstra_shortest.getPath(source, target);
+
         // Joining the two parts of the route
         Function<GraphWalk<CityVertex,CityEdge>,Double> calculateTotalWeight = graph -> graph.getEdgeList().stream()
                                                                                                 .mapToDouble((x) -> grid.getEdgeWeight(x))
@@ -80,10 +81,12 @@ public class ShortestPathCalculator {
     private class RoutesLength {
         Taxi taxi;
         int length;
+        double price;
 
-        RoutesLength(Taxi taxi, int length) {
+        RoutesLength(Taxi taxi, int length,double price) {
             this.taxi = taxi;
             this.length = length;
+            this.price = price;
         }
     }
 

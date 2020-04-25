@@ -2,8 +2,6 @@ package com.taxi.sb;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 import com.taxi.sb.exceptions.InvalidMapException;
 import com.taxi.sb.graph.CityGraph;
 import com.taxi.sb.graph.elements.CityVertex;
@@ -12,7 +10,6 @@ import com.taxi.sb.input.user.UserRequest;
 import com.taxi.sb.repositories.MapRepository;
 import com.taxi.sb.response.Response;
 import com.taxi.sb.response.Solution;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,16 +36,11 @@ public class GraphsManager {
 
     @Async("threadPoolTaskExecutor")
     @Transactional
-    public Future<String> request(UserRequest userRequest) {
+    public Future<String> request(UserRequest userRequest) throws InvalidMapException, ExecutionException, InterruptedException, JsonProcessingException {
         String jsonResponse;
-        try {
-            CityGraph cityGraph = produceGraph(userRequest);
-            Response response = calculatePaths(userRequest.getSource(),userRequest.getDestination(),cityGraph);
-            jsonResponse = processJson(response);
-        } catch (Exception e ) {
-            jsonResponse = processErrorJson();
-            LOGGER.error(ExceptionUtils.getStackTrace(e));
-        }
+        CityGraph cityGraph = produceGraph(userRequest);
+        Response response = calculatePaths(userRequest.getSource(), userRequest.getDestination(), cityGraph);
+        jsonResponse = processJson(response);
         return new AsyncResult<>(jsonResponse);
     }
 
@@ -75,10 +67,6 @@ public class GraphsManager {
 
     private String processJson(Response response) throws JsonProcessingException {
         return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(response);
-    }
-
-    private String processErrorJson()  {
-        return new Gson().toJson(JsonParser.parseString("{\"message:\"request cannot be processed\",\"status:\"500\"}"));
     }
 
 }

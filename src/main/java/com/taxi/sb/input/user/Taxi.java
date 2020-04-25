@@ -24,7 +24,7 @@ public class Taxi {
         this.y = y;
     }
 
-    public CityVertex getPositionAsCityVertex() {
+    public CityVertex getPosition() {
         return new CityVertex(x,y);
     }
 
