@@ -12,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -31,8 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes= Application.class)
 @ContextConfiguration(classes=Application.class)
 @AutoConfigureMockMvc
-@TestPropertySource(
-        locations = "classpath:application-integrationtest.properties")
 public class MapIntegrationTest {
 
     @Autowired
@@ -68,9 +65,9 @@ public class MapIntegrationTest {
 
         mapRepository.save(basicTest);
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/basic/user_requests/")
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/process_request/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"source\":{\"x\":1,\"y\":2},\"destination\":{\"x\":5,\"y\":2}}"))
+                .content("{\"cityId\":\"basic\",\"source\":{\"x\":1,\"y\":2},\"destination\":{\"x\":5,\"y\":2}}"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -109,9 +106,9 @@ public class MapIntegrationTest {
 
         mapRepository.save(unsolvable);
 
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/unsolvable/user_requests/")
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post("/process_request/")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"source\":{\"x\":1,\"y\":1},\"destination\":{\"x\":5,\"y\":1}}"))
+                .content("{\"cityId\":\"unsolvable\",\"source\":{\"x\":1,\"y\":1},\"destination\":{\"x\":5,\"y\":1}}"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().is4xxClientError())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

@@ -31,10 +31,9 @@ public class ServiceController {
         return "Welcome to " + model.getAttribute("appName");
     }
 
-    @RequestMapping(value = "{city}/user_requests/", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> computeRoute(@PathVariable(value = "city") String city, @Valid @RequestBody UserRequest userRequest)
+    @RequestMapping(value = "/process_request/", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+    public ResponseEntity<String> computeRoute(@Valid @RequestBody UserRequest userRequest)
     throws Exception {
-        userRequest.setCityId(city);
         Future<String> futureResponse = graphsManager.request(userRequest);
         String response = futureResponse.get();
         return new ResponseEntity<>(response, HttpStatus.OK);

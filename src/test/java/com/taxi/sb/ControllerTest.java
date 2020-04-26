@@ -39,10 +39,10 @@ public class ControllerTest {
     // Testing a basic (wrong) request to verify the controller's correctly up
     @Test
     public void userRequest() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.post("/milan/user_requests")
+        mvc.perform(MockMvcRequestBuilders.post("/process_request/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("utf-8")
-                .content("{\"source\":{\"x\":1,\"y\":1},\"destination\":{\"x\":2,\"y\":\"2\"}"))
+                .content("{\"cityId\":\"milan\",\"source\":{\"x\":1,\"y\":1},\"destination\":{\"x\":2,\"y\":\"2\"}"))
                 .andExpect(status().is4xxClientError())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();

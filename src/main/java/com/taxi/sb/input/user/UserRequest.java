@@ -3,10 +3,12 @@ package com.taxi.sb.input.user;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.taxi.sb.graph.elements.CityVertex;
 
+import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 public class UserRequest {
 
+    @NotNull
     private String cityId;
     private int x1,y1,x2,y2;
 
