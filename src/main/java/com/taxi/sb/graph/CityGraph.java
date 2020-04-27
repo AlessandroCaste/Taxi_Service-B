@@ -59,7 +59,7 @@ public class CityGraph {
        // Adding checkpoints
        for (Checkpoint checkpoint : checkpoints) {
             CityEdge checkpointEdge = grid.getEdge(checkpoint.getSource(),checkpoint.getTarget());
-            grid.setEdgeWeight(checkpointEdge,checkpoint.getPrice());
+            grid.setEdgeWeight(checkpointEdge,checkpoint.getPrice() + 1);
         }
 
         // Walls are modelled as the lack an edge between two nodes

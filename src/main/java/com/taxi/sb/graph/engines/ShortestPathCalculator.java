@@ -42,16 +42,16 @@ public class ShortestPathCalculator {
         // Hashmap stores the paths (keys = taxis). Utility ArrayList is for quickly sorting out the best choice by speed and price
         DijkstraShortestPath<CityVertex, CityEdge> dijkstra_shortest = new DijkstraShortestPath<>(new AsUnweightedGraph<>(grid));
         HashMap<Taxi, GraphWalk<CityVertex,CityEdge>> paths = new HashMap<>();
-        ArrayList<RoutesLength> routesLength = new ArrayList<>();
+        ArrayList<Route> routesLength = new ArrayList<>();
 
         for(Taxi taxi : taxis) {
             GraphWalk<CityVertex,CityEdge> shortPath = (GraphWalk<CityVertex, CityEdge>) dijkstra_shortest.getPath(taxi.getPosition(), source);
             paths.put(taxi,shortPath);
             double realWeight = shortPath.getEdgeList().stream().mapToDouble(e -> grid.getEdgeWeight(e)).sum();
             if(shortPath!=null)
-                routesLength.add(new RoutesLength(taxi,shortPath.getLength(),realWeight));
+                routesLength.add(new Route(taxi,shortPath.getLength(),realWeight));
         }
-        routesLength.sort(Comparator.comparingInt( (RoutesLength route) -> route.length)
+        routesLength.sort(Comparator.comparingInt( (Route route) -> route.length)
                                     .thenComparingDouble( route -> route.price));
         chosenTaxi = routesLength.get(0).taxi;
         GraphWalk<CityVertex,CityEdge> quickestPath = paths.get(chosenTaxi);
@@ -75,19 +75,6 @@ public class ShortestPathCalculator {
 
     public Taxi getChosenTaxi() {
         return chosenTaxi;
-    }
-
-    // A utility class to track to order taxis by the length of their route
-    private class RoutesLength {
-        Taxi taxi;
-        int length;
-        double price;
-
-        RoutesLength(Taxi taxi, int length,double price) {
-            this.taxi = taxi;
-            this.length = length;
-            this.price = price;
-        }
     }
 
 }
