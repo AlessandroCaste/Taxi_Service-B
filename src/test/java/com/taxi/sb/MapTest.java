@@ -131,7 +131,6 @@ public class MapTest {
 
         // Verifying that the cheapest taxi with the shortest path is chosen
         Future<String> response1 = graphsManager.request(new UserRequest("manyTaxis",5,3,11,5));
-        System.out.println(response1.get());
 
         assertThat(response1.get().contains("\"quickest\" : {\n" + "    \"taxi\" : \"taxi2\""),is(true));
         assertThat(response1.get().contains("\"cheapest\" : {\n" + "    \"taxi\" : \"taxi2\","),is(true));

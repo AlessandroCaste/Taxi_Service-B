@@ -75,7 +75,6 @@ public class MapIntegrationTest {
 
         // Analyzing the answer
         String extractedResponse = mvcResult.getResponse().getContentAsString();
-        System.out.println(extractedResponse);
         assertThat(extractedResponse.replaceAll("[\\n\\r\\s]", "").contains(
                 "\"cost\":16.0," +
                         "\"distance\":4," +
