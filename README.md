@@ -14,3 +14,4 @@ Receives a json user request together with the map id.
 + Maps are instantiated as a JgraphT grid, where walls are translated as edge removal and checkpoints as increased edge weights.
 + Each time a request is made a map is instantiated and the path retrieval process is started.
 + Graph management and path calculation have been parallelized. 
++ Dijkstra's shortest path algorithm has been used for path calculation (A* could be easily adopted as an alternative though).
